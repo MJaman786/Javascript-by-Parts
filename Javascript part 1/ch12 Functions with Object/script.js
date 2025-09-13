@@ -31,3 +31,11 @@ console.log(userFunction({ name: "Mitesh", skill: "Python" }))
 // Username: Mitesh
 // Userskill: Python
 
+// ✅ 3. Passing Array as an argumnets
+let fruits = ["Apple", "Banana", "Kiwi"];
+function fruitFunction(myArray) {
+    console.log(`Name of fruits: ${JSON.stringify(myArray)}`)
+}
+console.log(fruitFunction(fruits)) // Name of fruits: ["Apple","Banana","Kiwi"]
+console.log(fruitFunction(["Mango", "chiku", "pineapple"])) // Name of fruits: ["Mango","chiku","pineapple"]
+
