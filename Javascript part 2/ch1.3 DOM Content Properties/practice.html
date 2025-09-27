@@ -21,12 +21,40 @@
 </head>
 <body>
     <h1 class="head">This is heading text <span class="child-head"> (Text inside h1)</span></h1>
+    <h2>Week Days</h2>
+    <ul class="parent">
+        <li class="child ch1">Monday</li>
+        <li class="child ch2">Tuesday</li>
+        <li class="child ch3">Wednesday</li>
+        <li class="child ch4">Thrusday</li>
+        <li class="child ch5">Friday</li>
+        <li class="child ch6">Saturday</li>
+        <li class="child ch7">Sunday</li>
+    </ul>
     <script>
-        const h1 = document.querySelector('h1');
-        console.log(h1);
-        console.log(h1.innerHTML);
-        console.log(h1.innerText);
-        console.log(h1.textContent);
+        // const h1 = document.querySelector('h1');
+        // console.log(h1);
+        // console.log(h1.innerHTML);
+        // console.log(h1.innerText);
+        // console.log(h1.textContent);
+
+        const parent = document.querySelector('.parent')
+        console.log(parent);
+        console.log(parent.children[0].innerText)
+
+        const dayone = document.querySelector('.child');
+        console.log(dayone.nextElementSibling.innerText) // Tuesday
+        console.log(dayone.parentElement.innerHTML); 
+
+        const newchild = document.createElement('li');
+        console.log(newchild)
+        newchild.className = 'child ch8';
+        newchild.setAttribute('id', 'child-8');
+        
+        parent.appendChild(newchild)
+
+        console.log(dayone.parentElement); 
+
     </script>
 </body>
 </html>
