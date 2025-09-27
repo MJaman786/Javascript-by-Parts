@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,body{
+            background-color: #343434;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        span{
+            color: #343434;
+            background-color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="head">This is heading text <span class="child-head"> (Text inside h1)</span></h1>
+    <script>
+        const h1 = document.querySelector('h1');
+        console.log(h1);
+        console.log(h1.innerHTML);
+        console.log(h1.innerText);
+        console.log(h1.textContent);
+    </script>
+</body>
+</html>
+<!-- 
+# output in console
+
+This is heading text <span class="child-head"> (Text inside h1)</span>
+p.html:28 This is heading text 
+p.html:29 This is heading text  (Text inside h1)
+
+-->
