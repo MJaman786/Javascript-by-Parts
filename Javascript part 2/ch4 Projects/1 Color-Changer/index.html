@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #242424;
+            color: #fff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        h1,
+        p {
+            text-align: center;
+        }
+
+        p{
+            font-size: 25px;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-weight: bold;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+            flex: 1 1 auto;
+            font-size: 40px;
+        }
+
+        .button:nth-child(1) {
+            background-color: #DC143C;
+            color: #fff;
+        }
+        .button:nth-child(2) {
+            background-color: #064232;
+            color: #fff;
+        }
+        .button:nth-child(3) {
+            background-color: #19183B;
+            color: #fff;
+        }
+        .button:nth-child(4) {
+            background-color: #000B58;
+            color: #fff;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <h1>Color Changer Project</h1>
+    <div class="button-container">
+        <div class="button" id="#DC143C">Crimson</div>
+        <div class="button" id="#064232">Green</div>
+        <div class="button" id="#19183B">Black</div>
+        <div class="button" id="#000B58">Purple</div>
+    </div>
+    <div class="desc">
+        <p>This is a default color.</p>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
