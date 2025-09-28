@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Digital Clock</title>
+  <style>
+    /* Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220;
+      --glass: rgba(255,255,255,0.04);
+      --accent: #7dd3fc; /* light cyan */
+      --muted: rgba(255,255,255,0.6);
+      --shadow: rgba(2,6,23,0.6);
+      --radius: 14px;
+      --mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Segoe UI Mono', monospace;
+    }
+
+    html,body{
+      height: 100%;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1000px 600px at 10% 10%, #071226 0%, transparent 10%),
+                  radial-gradient(800px 500px at 90% 90%, #071226 0%, transparent 10%),
+                  var(--bg);
+      color: #fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Centering container */
+    .wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    /* Card */
+    .clock-card {
+      width: 100%;
+      max-width: 620px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 10px 30px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      display: grid;
+      gap: 18px;
+      align-items: center;
+    }
+
+    /* Header */
+    .clock-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .title {
+      font-size: 1.25rem;
+      letter-spacing: 0.2px;
+      font-weight: 600;
+    }
+
+    .sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Clock display */
+    .display {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding: 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+
+    .time-block {
+      display:flex;
+      align-items:flex-end;
+      gap:8px;
+    }
+
+    .digits {
+      font-family: var(--mono);
+      font-size: clamp(36px, 8vw, 64px);
+      line-height: 1;
+      font-weight: 700;
+      color: white;
+      letter-spacing: 1px;
+      padding: 6px 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: 8px;
+      min-width: 3.2ch;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+    }
+
+    .colon {
+      font-family: var(--mono);
+      font-size: clamp(36px, 6.5vw, 56px);
+      font-weight: 700;
+      color: var(--accent);
+      padding-bottom: 6px;
+      opacity: 0.95;
+    }
+
+    .ampm {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-left: 6px;
+      align-self: flex-start;
+      padding-top: 6px;
+      font-weight: 600;
+    }
+
+    /* Footer / extra info */
+    .meta {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .meta .timezone {
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    .badge {
+      background: var(--glass);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight:600;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+
+    /* Small screens */
+    @media (max-width:420px){
+      .clock-card{ padding:18px; gap:12px; }
+      .meta { flex-direction: column; align-items:flex-start; gap:8px; }
+      .display { padding:12px; gap:10px; }
+      .title { font-size:1.05rem; }
+    }
+
+    /* Optional visual flourish: blinking colon animation (pure CSS) */
+    @keyframes blink {
+      0%,49% { opacity: 1; transform: translateY(0); }
+      50%,100% { opacity: 0.1; transform: translateY(-2px); }
+    }
+    .colon.blink { animation: blink 1s steps(1,end) infinite; }
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="clock-card" aria-label="Digital clock">
+      <header class="clock-header">
+        <div>
+          <div class="title">Digital Clock</div>
+          <div class="sub">Clean responsive UI — hook your JavaScript below</div>
+        </div>
+        <div class="badge" aria-hidden="true">Live</div>
+      </header>
+
+      <!-- Display area: JS should update #hours #minutes #seconds #ampm -->
+      <div class="display" role="group" aria-label="Current time">
+        <div class="time-block" aria-hidden="true">
+          <div id="hours" class="digits">00</div>
+          <div class="colon blink">:</div>
+          <div id="minutes" class="digits">00</div>
+          <div class="colon blink">:</div>
+          <div id="seconds" class="digits">00</div>
+        </div>
+
+        <div id="ampm" class="ampm" aria-hidden="true">AM</div>
+      </div>
+
+      <div class="meta" aria-hidden="true">
+        <div class="timezone">
+          <span class="sub">Timezone</span>
+          <span class="badge" id="tz">Local</span>
+        </div>
+        <div class="sub">24/12 format: update via JS</div>
+      </div>
+    </section>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>
