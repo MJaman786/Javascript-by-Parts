@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for the game */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Simple animation for the message feedback */
+        .feedback-animation {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 flex flex-col items-center justify-center min-h-screen p-4 transition-colors duration-300">
+
+    <!-- Main heading for the game -->
+    <h1 class="text-4xl md:text-5xl font-bold text-center mb-4 text-indigo-600 dark:text-indigo-400">Number Guessing Game</h1>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-8">I'm thinking of a number between 1 and 100. Can you guess it?</p>
+
+    <!-- Main game card -->
+    <div id="game-card" class="bg-white dark:bg-gray-800 w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-lg transition-all duration-300">
+        <div class="text-center">
+            <!-- Message area for feedback like 'Too High', 'Too Low' -->
+            <p id="message" class="h-8 text-lg font-semibold mb-4">&nbsp;</p>
+            
+            <!-- Input field and check button container -->
+            <div class="flex flex-col sm:flex-row gap-4">
+                <input type="number" id="guess-input" placeholder="Enter your guess" class="w-full px-4 py-3 text-lg bg-gray-100 dark:bg-gray-700 border-2 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" min="1" max="100">
+                <button id="check-btn" class="w-full sm:w-auto px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 transition-transform transform hover:scale-105">
+                    Check
+                </button>
+            </div>
+             <!-- Play again button, hidden by default -->
+            <button id="play-again-btn" class="hidden mt-6 w-full px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:focus:ring-offset-gray-800 transition-transform transform hover:scale-105">
+                Play Again
+            </button>
+        </div>
+    </div>
+
+    <!-- Display for remaining guesses -->
+    <div class="mt-8 text-center">
+        <p class="text-lg text-gray-600 dark:text-gray-400">
+            Guesses Remaining: <span id="guess-count" class="font-bold text-2xl text-indigo-600 dark:text-indigo-400">10</span>
+        </p>
+    </div>
+
+    <script>
+        // --- DOM Element Selection ---
+        const guessInput = document.getElementById('guess-input');
+        const checkBtn = document.getElementById('check-btn');
+        const playAgainBtn = document.getElementById('play-again-btn');
+        const messageEl = document.getElementById('message');
+        const guessCountEl = document.getElementById('guess-count');
+        const gameCard = document.getElementById('game-card');
+
+        // --- Game State Variables ---
+        let randomNumber;
+        let remainingGuesses;
+        const MAX_GUESSES = 10;
+
+        // --- Game Logic Functions ---
+
+        /**
+         * Initializes or resets the game to its starting state.
+         */
+        function initGame() {
+            // Generate a new random number between 1 and 100
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            remainingGuesses = MAX_GUESSES;
+            
+            // Reset UI elements
+            guessCountEl.textContent = remainingGuesses;
+            messageEl.textContent = 'Good luck!';
+            messageEl.className = 'h-8 text-lg font-semibold mb-4 text-gray-500'; // Reset color
+            guessInput.value = '';
+            
+            // Enable input and check button, hide play again button
+            guessInput.disabled = false;
+            checkBtn.classList.remove('hidden');
+            checkBtn.disabled = false;
+            playAgainBtn.classList.add('hidden');
+            gameCard.classList.remove('border-4', 'border-green-400', 'border-red-400');
+        }
+
+        /**
+         * Updates the message displayed to the user with an animation.
+         * @param {string} text - The message to display.
+         * @param {string} colorClass - The Tailwind CSS class for the text color.
+         */
+        function updateMessage(text, colorClass) {
+            messageEl.textContent = text;
+            messageEl.className = `h-8 text-lg font-semibold mb-4 feedback-animation ${colorClass}`;
+        }
+
+        /**
+         * Handles the end of the game, whether win or lose.
+         * @param {boolean} isWin - True if the player won, false otherwise.
+         */
+        function endGame(isWin) {
+            guessInput.disabled = true;
+            checkBtn.classList.add('hidden');
+            playAgainBtn.classList.remove('hidden');
+
+            if (isWin) {
+                updateMessage(`🎉 You got it! The number was ${randomNumber}.`, 'text-green-500');
+                gameCard.classList.add('border-4', 'border-green-400');
+            } else {
+                updateMessage(`😭 Game Over! The number was ${randomNumber}.`, 'text-red-500');
+                gameCard.classList.add('border-4', 'border-red-400');
+            }
+        }
+
+        /**
+         * Processes the user's guess.
+         */
+        function handleGuess() {
+            const userGuess = parseInt(guessInput.value);
+
+            // Validate input
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                updateMessage('Please enter a number between 1 and 100.', 'text-yellow-500');
+                return;
+            }
+
+            // Decrement guesses and update display
+            remainingGuesses--;
+            guessCountEl.textContent = remainingGuesses;
+
+            // Compare guess with the random number
+            if (userGuess === randomNumber) {
+                endGame(true);
+            } else if (userGuess > randomNumber) {
+                updateMessage('Too high! Try a smaller number.', 'text-blue-500');
+            } else {
+                updateMessage('Too low! Try a larger number.', 'text-purple-500');
+            }
+            
+            guessInput.value = '';
+            guessInput.focus();
+
+            // Check for game over condition
+            if (remainingGuesses <= 0 && userGuess !== randomNumber) {
+                endGame(false);
+            }
+        }
+
+
+        // --- Event Listeners ---
+        checkBtn.addEventListener('click', handleGuess);
+        playAgainBtn.addEventListener('click', initGame);
+        
+        // Allow user to press Enter to submit their guess
+        guessInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                handleGuess();
+            }
+        });
+
+
+        // --- Initial Game Start ---
+        initGame();
+    </script>
+</body>
+</html>
