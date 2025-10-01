@@ -56,31 +56,29 @@ Most modern way to attach events.
 Syntax:
 ```js
 element.addEventListener(eventType, callbackFunction);
+```
 
-📌 What is the event parameter?
+## 📌 What is the event parameter?
 
 When an event occurs (like a click), the browser automatically creates an event object that contains information about that action.
 
 👉 If we write:
 
+``` js
 element.addEventListener("click", function(e) {
   console.log(e);
 });
+```
+* e (or event) is the event object.
+* It gives details like:
+* Which element was clicked
+* Mouse position
+* Which key was pressed
+* Whether CTRL/SHIFT was held, etc.
 
+## 📌 Example: Button Click
 
-e (or event) is the event object.
-
-It gives details like:
-
-Which element was clicked
-
-Mouse position
-
-Which key was pressed
-
-Whether CTRL/SHIFT was held, etc.
-
-📌 Example: Button Click
+``` html
 <button id="btn">Click Me</button>
 
 <script>
@@ -94,8 +92,10 @@ Whether CTRL/SHIFT was held, etc.
     console.log("Mouse Y:", e.clientY);     // Y coordinate of click
   });
 </script>
+```
 
-📌 Example: Keyboard Event
+## 📌 Example: Keyboard Event
+``` html
 <input type="text" id="inputBox" placeholder="Type something...">
 
 <script>
@@ -107,19 +107,26 @@ Whether CTRL/SHIFT was held, etc.
     console.log("Ctrl pressed?:", e.ctrlKey); // true/false
   });
 </script>
+```
 
-📌 Common Properties of event object
-Property	Description
-e.type	Type of event (click, keydown, etc.)
-e.target	The element that triggered the event
-e.currentTarget	The element the event listener is attached to
-e.clientX / e.clientY	Mouse click position (X/Y) relative to viewport
-e.key	Key pressed (like "Enter", "a")
-e.keyCode	Numeric code of key pressed
-e.altKey / e.ctrlKey / e.shiftKey	true/false if modifier keys were pressed
-e.preventDefault()	Prevents default action (e.g., stop form from submitting)
-e.stopPropagation()	Stops event bubbling (prevents event from going up to parent elements)
-📌 Example: Prevent Default Form Submit
+## 📌 Common Properties of event object
+## 📌 Common Event Object Properties
+
+| Property                | Description |
+|-------------------------|-------------|
+| `e.type`               | Type of event (`click`, `keydown`, etc.) |
+| `e.target`             | The element that triggered the event |
+| `e.currentTarget`      | The element the event listener is attached to |
+| `e.clientX / e.clientY`| Mouse click position (X/Y) relative to viewport |
+| `e.key`                | Key pressed (like `"Enter"`, `"a"`) |
+| `e.keyCode`            | Numeric code of key pressed |
+| `e.altKey / e.ctrlKey / e.shiftKey` | `true/false` if modifier keys were pressed |
+| `e.preventDefault()`   | Prevents default action (e.g., stop form from submitting) |
+| `e.stopPropagation()`  | Stops event bubbling (prevents event from going up to parent elements) |
+
+## 📌 Example: Prevent Default Form Submit
+
+``` html
 <form id="myForm">
   <input type="text" placeholder="Enter something" required>
   <button type="submit">Submit</button>
@@ -133,14 +140,9 @@ e.stopPropagation()	Stops event bubbling (prevents event from going up to parent
     console.log("Form submission prevented!");
   });
 </script>
-
-
-✅ Summary
-
-addEventListener lets you attach multiple events to an element.
-
-The event object (e) gives details about what happened.
-
-Use e.preventDefault() and e.stopPropagation() for advanced control.
-
 ```
+
+## ✅Summary
+* addEventListener lets you attach multiple events to an element.
+* The event object (e) gives details about what happened.
+* Use e.preventDefault() and e.stopPropagation() for advanced control.
