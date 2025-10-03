@@ -14,6 +14,7 @@ input.addEventListener("keyup", (e) => {
 // Detecting Ctrl + Enter
 input.addEventListener("keydown", (e) => {
     if (e.ctrlKey && e.key === "Enter") {
+        alert("Shortcut Detected: Ctrl + Enter");
         output.textContent = "Shortcut Detected: Ctrl + Enter";
     }
 });
