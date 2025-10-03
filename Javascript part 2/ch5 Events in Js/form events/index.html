@@ -4,23 +4,108 @@
   <meta charset="UTF-8">
   <title>Form Events Example</title>
   <style>
-    body { font-family: Arial; background: #f4f4f4; padding: 20px; }
-    form { background: #fff; padding: 20px; border-radius: 8px; width: 300px; }
-    input, button { display: block; margin: 10px 0; padding: 10px; font-size: 16px; width: 100%; }
-    #output { font-size: 14px; color: #333; margin-top: 10px; }
+    /* Reset & Base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: linear-gradient(135deg, #4facfe, #00f2fe); 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    /* Form Container */
+    form { 
+      background: #fff; 
+      padding: 25px; 
+      border-radius: 12px; 
+      width: 100%; 
+      max-width: 400px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Inputs & Buttons */
+    input, button { 
+      display: block; 
+      margin: 12px 0; 
+      padding: 12px; 
+      font-size: 16px; 
+      width: 100%; 
+      border-radius: 8px; 
+      border: 1px solid #ddd; 
+      transition: all 0.3s ease; 
+    }
+
+    input:focus { 
+      border-color: #4facfe; 
+      outline: none; 
+      box-shadow: 0 0 6px rgba(79,172,254,0.6); 
+    }
+
+    button { 
+      border: none; 
+      font-weight: bold; 
+      cursor: pointer; 
+      color: #fff; 
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      transition: transform 0.2s ease;
+    }
+
+    button:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 6px 15px rgba(118,75,162,0.3); 
+    }
+
+    button[type="reset"] {
+      background: #f44336;
+    }
+
+    button[type="reset"]:hover {
+      background: #d32f2f;
+    }
+
+    /* Output Message */
+    #output { 
+      font-size: 15px; 
+      color: #333; 
+      margin-top: 15px; 
+      text-align: center; 
+      background: #f9f9f9; 
+      padding: 10px; 
+      border-radius: 8px; 
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); 
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      form { padding: 20px; }
+      h2 { font-size: 22px; }
+      input, button { font-size: 15px; padding: 10px; }
+    }
   </style>
 </head>
 <body>
-  <h2>Form Events Demo</h2>
+  <div>
+    <h2>Form Events Demo</h2>
 
-  <form id="myForm">
-    <input type="text" id="username" placeholder="Enter username">
-    <input type="email" id="email" placeholder="Enter email">
-    <button type="submit">Submit</button>
-    <button type="reset">Reset</button>
-  </form>
+    <form id="myForm">
+      <input type="text" id="username" placeholder="Enter username" autocomplete="off">
+      <input type="email" id="email" placeholder="Enter email" autocomplete="off">
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </form>
 
-  <p id="output">Event messages will appear here...</p>
+    <p id="output">Event messages will appear here...</p>
+  </div>
 
   <script src="./script.js"></script>
 </body>
