@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Events Example</title>
+  <style>
+    body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+    form { background: #fff; padding: 20px; border-radius: 8px; width: 300px; }
+    input, button { display: block; margin: 10px 0; padding: 10px; font-size: 16px; width: 100%; }
+    #output { font-size: 14px; color: #333; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Form Events Demo</h2>
+
+  <form id="myForm">
+    <input type="text" id="username" placeholder="Enter username">
+    <input type="email" id="email" placeholder="Enter email">
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+  </form>
+
+  <p id="output">Event messages will appear here...</p>
+
+  <script src="./script.js"></script>
+</body>
+</html>
