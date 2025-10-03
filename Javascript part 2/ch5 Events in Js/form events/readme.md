@@ -19,9 +19,9 @@ They are commonly used for **form validation, input tracking, and submission han
 ---
 
 ### 📌 Summary
-`submit` → triggered when form is submitted (use e.preventDefault() to stop reload).
-`input` → fires on every keystroke inside an input/textarea.
-`change` → fires when input changes after losing focus.
-`focus` → triggered when field is active.
-`blur` → triggered when field loses focus.
-`reset` → triggered when form reset button is clicked.
+* `submit` → triggered when form is submitted (use e.preventDefault() to stop reload).
+* `input` → fires on every keystroke inside an input/textarea.
+* `change` → fires when input changes after losing focus.
+* `focus` → triggered when field is active.
+* `blur` → triggered when field loses focus.
+* `reset` → triggered when form reset button is clicked.
