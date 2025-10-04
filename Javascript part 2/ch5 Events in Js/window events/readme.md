@@ -31,5 +31,5 @@ They are useful for handling **page setup, performance tracking, user behavior, 
 * `resize` → track window size changes.
 * `scroll` → detect scroll position.
 * `beforeunload` → show confirmation before leaving page.
-* `focus` / blur → detect tab switch.
-* `online` / offline → track network status.
+* `focus` / `blur` → detect tab switch.
+* `online` / `offline` → track network status.
