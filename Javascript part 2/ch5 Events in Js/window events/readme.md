@@ -26,10 +26,10 @@ They are useful for handling **page setup, performance tracking, user behavior, 
 
 ## 📌 Summary
 
-`load` → fires when everything is loaded.
-`DOMContentLoaded` → fires earlier, when HTML is parsed.
-`resize` → track window size changes.
-`scroll` → detect scroll position.
-`beforeunload` → show confirmation before leaving page.
-`focus` / blur → detect tab switch.
-`online` / offline → track network status.
+* `load` → fires when everything is loaded.
+* `DOMContentLoaded` → fires earlier, when HTML is parsed.
+* `resize` → track window size changes.
+* `scroll` → detect scroll position.
+* `beforeunload` → show confirmation before leaving page.
+* `focus` / blur → detect tab switch.
+* `online` / offline → track network status.
