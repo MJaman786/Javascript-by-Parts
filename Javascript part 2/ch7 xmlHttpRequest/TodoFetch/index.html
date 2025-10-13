@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist To-Do List</title>
+    <style>
+        /* Global Reset and Font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --- Deep Ocean Blue & Teal Theme Colors --- */
+        :root {
+            --bg-charcoal: #0A192F; /* Very Dark Navy Blue Background */
+            --card-charcoal: #172A45; /* Darker Navy Card Background */
+            --accent-teal: #64FFDA; /* Primary Bright Teal Accent */
+            --text-light: #CCD6F6; /* Light Blue-Gray Text */
+            --text-muted: #8892B0; /* Muted Gray-Blue Text */
+            --border-dark: #303C55; /* Subtle Blue Border */
+            --completed-bg: #1A333A; /* Dark Tealish background for completed tasks */
+            --pending-orange: #FFB300; /* Bright Orange for Pending Status */
+        }
+
+        /* --- Global & Body Styles --- */
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-charcoal);
+            display: flex;
+            justify-content: center;
+            color: var(--text-light);
+            padding: 50px 20px; 
+        }
+
+        /* --- Main Container Styles --- */
+        .todo-container {
+            width: 100%;
+            max-width: 1000px;
+            background-color: var(--card-charcoal);
+            padding: 40px;
+            border-radius: 12px;
+            /* Subtle shadow using the teal accent */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(100, 255, 218, 0.1); 
+        }
+
+        .todo-title {
+            color: var(--accent-teal);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+
+        .todo-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        /* --- Filter/Controls --- */
+        .filter-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .filter-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .dropdown-select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-dark);
+            background-color: var(--bg-charcoal);
+            color: var(--text-light);
+            font-size: 1rem;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .dropdown-select:focus {
+            border-color: var(--accent-teal);
+        }
+
+        /* --- To-Do List & Item Styles (MINIMALIST GRID LAYOUT) --- */
+        .todo-list {
+            /* Use CSS Grid for the two-column layout */
+            display: grid;
+            grid-template-columns: 1fr; /* Default to single column for small screens */
+            gap: 15px;
+        }
+
+        /* Two-column layout for larger screens */
+        @media (min-width: 700px) {
+            .todo-list {
+                grid-template-columns: 1fr 1fr; /* Two equal columns */
+                gap: 20px;
+            }
+        }
+
+        .loading-message, .error-message {
+            /* Must span both columns if the grid is active */
+            grid-column: 1 / -1; 
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .loading-message {
+            color: var(--accent-teal);
+        }
+
+        .error-message {
+            color: #ff6666; /* Red for errors */
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Individual To-Do Item Card - Simpler and flatter */
+        .todo-item {
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-dark); /* Minimal border */
+            border-left: 5px solid transparent; /* Used for status indicator */
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: background-color 0.3s, border-color 0.3s; 
+        }
+
+        .todo-item:hover {
+            background-color: #243853; /* Slight background change on hover */
+        }
+
+        .todo-title-text {
+            font-size: 0.95rem; /* Slightly smaller text for compactness */
+            font-weight: 400; /* Regular weight */
+            line-height: 1.3;
+        }
+
+        .todo-meta {
+            font-size: 0.7rem; /* Very small meta info */
+            color: var(--text-muted);
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Status Specific Styles */
+        .completed {
+            background-color: var(--completed-bg);
+            border-left-color: var(--accent-teal);
+        }
+
+        .pending {
+            background-color: var(--card-charcoal); 
+            border-left-color: var(--pending-orange); 
+        }
+
+        /* Completion Text decoration */
+        .completed .todo-title-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1 class="todo-title">User To-Do List Dashboard</h1>
+        <p class="todo-subtitle">Data fetched from JSONPlaceholder API.</p>
+
+        <!-- This is where the todo items will be injected by JavaScript -->
+        <div id="todoList" class="todo-list">
+            <!-- Loading message -->
+            <div class="loading-message">Loading to-do items...</div>
+        </div>
+
+        <div id="loadingError" class="error-message hidden">
+            Failed to load tasks. Please check the network connection.
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>

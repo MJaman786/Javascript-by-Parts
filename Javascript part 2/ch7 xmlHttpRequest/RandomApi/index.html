@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist To-Do List Dashboard</title>
+    <!-- Use Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Reset and Font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Theme Colors */
+        :root {
+            --bg-charcoal: #121212;
+            --card-charcoal: #1e1e1e;
+            --accent-green: #4CAF50; /* Primary Green Accent */
+            --text-light: #E0E0E0;
+            --text-muted: #9E9E9E;
+            --border-dark: #424242;
+            --completed-bg: #1e2e1e; /* Subtle green for completed background */
+            --highlight-blue: #3a475a; /* Subtle hover/focus for dropdown options */
+            --pending-orange: #FF9800;
+            
+            /* NEW Shadow variables for modern look */
+            --shadow-base: 0 2px 6px rgba(0, 0, 0, 0.6);
+            --shadow-focus: 0 0 10px rgba(76, 175, 80, 0.4), 0 4px 10px rgba(0, 0, 0, 0.7);
+            --shadow-list: 0 15px 30px rgba(0, 0, 0, 0.8), 0 0 15px var(--accent-green);
+        }
+
+        /* --- Global & Body Styles --- */
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-charcoal);
+            display: flex;
+            justify-content: center;
+            color: var(--text-light);
+            padding: 50px 20px; 
+        }
+
+        /* --- Main Container Styles --- */
+        .todo-container {
+            width: 100%;
+            max-width: 1000px; 
+            background-color: var(--card-charcoal);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(76, 175, 80, 0.1); 
+        }
+
+        .todo-title {
+            color: var(--accent-green);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+
+        .todo-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        /* --- Filter/Controls --- */
+        .filter-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap; 
+        }
+
+        .filter-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        /* --- Custom Dropdown Styles (Enhanced) --- */
+        .custom-dropdown-container {
+            position: relative;
+            width: 220px; 
+            z-index: 10;
+        }
+
+        /* Dropdown Head - Borderless, Shadowed, and Interactive */
+        .dropdown-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: none; /* Removed border */
+            background-color: #282828; /* Slightly lighter bg for contrast */
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1rem;
+            
+            /* Apply base shadow and interactive transitions */
+            box-shadow: var(--shadow-base); 
+            transition: box-shadow 0.2s, background-color 0.2s, transform 0.1s ease-out;
+        }
+
+        .dropdown-head:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+            background-color: #333333; 
+        }
+        
+        /* Active (click) state for subtle 'depressed' feedback */
+        .dropdown-head.active {
+            transform: translateY(1px);
+            box-shadow: var(--shadow-base); /* Reset shadow to feel depressed */
+        }
+        
+        /* Focus state when open */
+        .dropdown-head.open {
+            box-shadow: var(--shadow-focus); 
+            background-color: var(--bg-charcoal);
+        }
+
+        /* Wrapper for the selected icon and text */
+        .selected-content-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        
+        .selected-content-wrapper svg {
+            color: var(--accent-green); 
+        }
+
+        .chevron svg {
+            transition: transform 0.2s ease-in-out;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .dropdown-head.open .chevron svg {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown Options List */
+        .dropdown-options {
+            position: absolute;
+            top: calc(100% + 1px); /* Move down slightly to separate visually */
+            left: 0;
+            right: 0;
+            list-style: none;
+            background-color: var(--bg-charcoal);
+            border: none; /* Removed border */
+            border-radius: 6px;
+            
+            /* Floating list shadow */
+            box-shadow: var(--shadow-list); 
+            
+            max-height: 0;
+            overflow-y: hidden; 
+            transition: max-height 0.3s ease-in-out;
+            padding: 0; /* Remove top padding since it's now handled by the LI's */
+        }
+        
+        .dropdown-options.open {
+            max-height: 150px;
+            overflow-y: auto; 
+        }
+
+        /* Individual option items */
+        .dropdown-options li {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--border-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dropdown-options li:first-child {
+            padding-top: 15px; /* Add padding to top of list */
+        }
+        
+        .dropdown-options li:last-child {
+            border-bottom: none;
+            padding-bottom: 15px; /* Add padding to bottom of list */
+        }
+
+        .dropdown-options li:hover, .dropdown-options li.selected {
+            background-color: var(--highlight-blue);
+            color: var(--text-light);
+        }
+        
+        .dropdown-options li svg {
+            color: var(--text-muted); 
+            flex-shrink: 0;
+        }
+        
+        .dropdown-options li:hover svg, .dropdown-options li.selected svg {
+            color: var(--accent-green);
+        }
+        
+        /* Hide default scrollbar for Webkit browsers */
+        .dropdown-options::-webkit-scrollbar {
+            width: 0px; 
+            background: transparent; 
+        }
+        
+        /* --- To-Do List & Item Styles --- */
+        .todo-list {
+            display: grid;
+            grid-template-columns: 1fr; 
+            gap: 15px;
+        }
+
+        @media (min-width: 700px) {
+            .todo-list {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+        }
+
+        .loading-message, .error-message {
+            grid-column: 1 / -1; 
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .loading-message {
+            color: var(--accent-green);
+        }
+
+        .error-message {
+            color: #ff6666; 
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Individual To-Do Item Card */
+        .todo-item {
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-dark); 
+            border-left: 5px solid transparent; 
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: background-color 0.3s, border-color 0.3s; 
+        }
+
+        .todo-item:hover {
+            background-color: #282828; 
+        }
+
+        .todo-title-text {
+            font-size: 0.95rem; 
+            font-weight: 400; 
+            line-height: 1.3;
+        }
+
+        .todo-meta {
+            font-size: 0.7rem; 
+            color: var(--text-muted);
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Status Specific Styles */
+        .completed {
+            background-color: var(--completed-bg);
+            border-left-color: var(--accent-green);
+        }
+
+        .pending {
+            background-color: var(--card-charcoal); 
+            border-left-color: var(--pending-orange); 
+        }
+
+        /* Completion Text decoration */
+        .completed .todo-title-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1 class="todo-title">User To-Do List Dashboard</h1>
+        <p class="todo-subtitle">Data fetched from JSONPlaceholder API.</p>
+
+        <!-- Status Filter Custom Dropdown -->
+        <div class="filter-controls">
+            <label class="filter-label">Filter by Status:</label>
+            
+            <div class="custom-dropdown-container">
+                <!-- Dropdown Head (Clickable to open/close) -->
+                <div id="dropdownHead" class="dropdown-head" data-value="all">
+                    <div class="selected-content-wrapper">
+                        <!-- Icon will be dynamically injected here -->
+                        <span id="currentStatusIcon" class="status-icon"></span>
+                        <span id="selectedOptionText">All Tasks</span>
+                    </div>
+                    <div class="chevron">
+                        <!-- SVG Chevron Down Icon -->
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Options List -->
+                <ul id="optionContainer" class="dropdown-options">
+                    <li data-value="all" class="selected">
+                        <!-- List Icon SVG -->
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 3h18v18H3zM18 10H6v2h12z"/></svg>
+                        All Tasks
+                    </li>
+                    <li data-value="completed">
+                        <!-- Checkmark Icon SVG -->
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                        Completed
+                    </li>
+                    <li data-value="pending">
+                        <!-- Clock/Time Icon SVG -->
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        Pending
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- This is where the todo items will be injected by JavaScript -->
+        <div id="todoList" class="todo-list">
+            <div class="loading-message">Loading to-do items...</div>
+        </div>
+
+        <div id="loadingError" class="error-message hidden">
+            Failed to load tasks. Please check the network connection.
+        </div>
+    </div>
+    
+    <script src="./script.js"></script>
+</body>
+</html>
