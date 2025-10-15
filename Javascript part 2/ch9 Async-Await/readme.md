@@ -2,7 +2,7 @@
 
 ## 🧠 Introduction  
 **Async/Await** is a modern way to handle **asynchronous operations** in JavaScript.  
-It is built on top of **Promises** and allows developers to write asynchronous code that looks and behaves like **synchronous** code, making it easier to read and maintain.  
+It is `syntactic sugar` built on top of **Promises** and allows developers to write asynchronous code that looks and behaves like **synchronous** code, making it easier to read and maintain.  
 
 Using `async` and `await`, you can avoid complex `.then()` and `.catch()` promise chains and handle asynchronous logic more cleanly.
 
