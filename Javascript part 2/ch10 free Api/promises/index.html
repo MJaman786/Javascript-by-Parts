@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimalist User Data Index</title>
+    <!-- Google Fonts: Inter for clean, modern typography -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- CSS Variables --- */
+      :root {
+        --color-bg-primary: #111111; /* Deepest background */
+        --color-bg-card: #1c1c1c; /* Card background */
+        --color-text-primary: #ffffff; /* Main text color */
+        --color-text-secondary: #aaaaaa; /* Label text color */
+        --color-accent: #48bb78; /* Subtle green accent */
+        --spacing-large: 2.5rem;
+        --spacing-medium: 1.5rem;
+      }
+
+      /* --- Global & Typography --- */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--color-bg-primary);
+        color: var(--color-text-primary);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        line-height: 1.5;
+        transition: background-color 0.3s;
+      }
+
+      /* --- Main Layout Container --- */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: var(--spacing-large) 1rem;
+      }
+
+      /* --- Header/Title Area --- */
+      .header {
+        text-align: center;
+        margin-bottom: var(--spacing-large);
+        padding-bottom: var(--spacing-medium);
+        border-bottom: 1px solid #333; /* Subtle separator */
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem 0;
+        color: var(--color-text-primary);
+      }
+
+      .header p {
+        color: var(--color-text-secondary);
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      /* --- User Grid Layout (Responsive) --- */
+      .user-grid {
+        display: grid;
+        /* Adaptive grid: 1 column on mobile, 2 on tablet, 3 on desktop */
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--spacing-medium);
+      }
+
+      /* --- Individual User Card Styling --- */
+      .user-card {
+        background-color: var(--color-bg-card);
+        padding: var(--spacing-medium);
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle dark shadow */
+        transition: all 0.5s ease;
+        border: 1px solid transparent; /* Prepare for border on hover */
+      }
+
+      /* Interactive Hover Effect: subtle lift and accent border */
+      .user-card:hover {
+        transform: translateY(-1px);
+      }
+
+      /* Card Header (Name) */
+      .user-card h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-accent); /* Use accent color for main name */
+        border-bottom: 1px solid #333;
+        padding-bottom: 0.5rem;
+        margin: 0 0 1rem 0;
+      }
+
+      /* Data Fields */
+      .data-field {
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+        line-height: 1.3;
+      }
+
+      .data-field strong {
+        display: inline-block;
+        width: 90px; /* Fixed width for labels for alignment */
+        color: var(--color-text-secondary);
+        font-weight: 400;
+      }
+
+      .data-field .value {
+        color: var(--color-text-primary);
+        word-wrap: break-word;
+      }
+
+      /* Nested Data (Address/Company) */
+      .nested-data {
+        margin-top: 0.5rem;
+        padding-left: 100px; /* Align content with labels above */
+      }
+
+      .nested-data .value {
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      /* --- Placeholder Styling --- */
+      #user-data-container:empty:before {
+        content: "Data Fetch Ready: Please execute the API script.";
+        color: var(--color-text-secondary);
+        display: block;
+        text-align: center;
+        padding: 4rem 0;
+        font-size: 1.2rem;
+      }
+
+      /* --- Mobile Responsiveness --- */
+      @media (max-width: 600px) {
+        .container {
+          padding: var(--spacing-medium) 0.5rem;
+        }
+        .header h1 {
+          font-size: 2rem;
+        }
+        .user-grid {
+          gap: 1rem;
+        }
+        .nested-data {
+          /* Remove left padding on small screens for better use of space */
+          padding-left: 0;
+        }
+        .data-field strong {
+          width: 100%;
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>User Directory</h1>
+        <p>Minimalist display of fetched API data from JSONPlaceholder.</p>
+      </div>
+
+      <!-- Your JavaScript will inject the data cards into this container -->
+      <main class="user-grid" id="user-data-container">
+        <!-- Example Card Structure for reference (Your script will generate these) -->
+        
+        <!-- The actual cards will be generated by your JavaScript -->
+      </main>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
