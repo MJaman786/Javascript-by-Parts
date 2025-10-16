@@ -3,189 +3,198 @@
 
 ## 🧠 Introduction
 
-Object-Oriented Programming (**OOP**) is a programming paradigm that uses **"objects"** as its primary building blocks. These objects can contain both **data** (in the form of **properties**) and **code** (in the form of **methods**).
+**Object-Oriented Programming (OOP)** is a programming paradigm that structures code into reusable units called **objects**, which represent real-world entities.  
+Each object contains **properties** (data) and **methods** (functions) that operate on that data.
 
-In JavaScript, OOP is primarily achieved using **classes** and **prototypes**. The core idea is to structure code by modeling real-world entities or concepts.
-
-### Key Principles of OOP
-
-| Principle | Simple Explanation |
-| :--- | :--- |
-| **Encapsulation** | Bundling data (properties) and methods that operate on the data into a single unit (the object/class), often hiding internal details. |
-| **Inheritization** | A mechanism where a new class (subclass/child) can inherit properties and methods from an existing class (superclass/parent). |
-| **Polymorphism** | The ability of an object to take on many forms; typically, a single interface (method name) can be used for different underlying data types or classes. |
-| **Abstraction** | Hiding the complex implementation details and showing only the essential features of the object to the user. |
+JavaScript is **prototype-based**, but it fully supports OOP principles such as:
+- **Encapsulation** — bundling data and methods together
+- **Inheritance** — reusing properties and methods of existing objects
+- **Polymorphism** — methods behaving differently based on the object
+- **Abstraction** — hiding complex details and showing only essential features
 
 ---
 
 ## 💡 Common Use Cases
 
-OOP in JavaScript is fundamental for creating well-structured, maintainable, and scalable applications.
+OOP in JavaScript is widely used for:
 
-* **UI Components:** Creating reusable components (like a `Button`, `Modal`, or `UserCard`) where each component is an object with its own state (properties) and behavior (methods).
-* **Game Development:** Modeling game entities like `Player`, `Enemy`, `Weapon`, each inheriting base properties from a common `GameObject` class.
-* **Data Structures:** Implementing complex data structures like `Stack`, `Queue`, or `LinkedList` where methods like `push`, `pop`, `enqueue`, and `dequeue` are encapsulated within the class.
-* **API Client Libraries:** Building classes like `HttpClient` or `AuthService` to manage network requests and authentication logic in an organized way.
+- Building **web applications** with reusable components (e.g., React, Vue)
+- Designing **game objects** (like players, enemies, items)
+- Creating **data models** (for APIs, databases, or UI states)
+- Organizing **large-scale applications** for better maintainability
 
 ---
 
-## ⚙️ Syntax and Explanation (Classes)
+## ⚙️ Syntax and Explanation
 
-Modern JavaScript uses the **`class`** keyword (introduced in ES6) as syntactic sugar over JavaScript's existing prototype-based inheritance.
+You can create objects and classes in JavaScript in multiple ways:
 
-### Class Definition Structure
-
-A class is a blueprint for creating objects.
-
-```javascript
-class ClassName {
-  // 1. Constructor: A special method for creating and initializing an object created with a class.
-  constructor(param1, param2) {
-    this.property1 = param1; // Instance property
-    this.property2 = param2; // Instance property
+### 1. Using Object Literals
+```js
+const user = {
+  name: "Aman",
+  age: 25,
+  greet() {
+    console.log(`Hello, my name is ${this.name}`);
   }
+};
 
-  // 2. Methods: Functions that belong to the class/object.
-  methodName(arg) {
-    // Logic goes here
-    return this.property1 + arg;
-  }
-
-  // 3. Static Methods: Methods called on the class itself, not on an instance.
-  static staticMethod() {
-    return 'This is a class-level operation.';
-  }
-}
+user.greet();
 ````
 
-### Important Methods and Keywords (Table)
+### 2. Using Constructor Functions
 
-| Item | Type | Description |
-| :--- | :--- | :--- |
-| `class` | Keyword | Declares a new class. |
-| `constructor()` | Method | The method called when a new object is created (`new ClassName(...)`). Used for initial setup. |
-| `this` | Keyword | Refers to the current instance of the class (the object being created). |
-| `extends` | Keyword | Used in class declarations to create a class that is a child of another class (inheritance). |
-| `super()` | Function | Calls the constructor of the parent class. Must be used inside the child's constructor. |
-| `static` | Keyword | Defines a method or property as belonging to the class itself, not to its instances. |
+```js
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.introduce = function() {
+    console.log(`Hi, I'm ${this.name} and I'm ${this.age} years old.`);
+  };
+}
 
------
+const person1 = new Person("Aman", 25);
+person1.introduce();
+```
 
-## 💻 Example Code
+### 3. Using ES6 Classes
 
-### Basic Usage: Creating and Instantiating a Class
+```js
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
 
-This example demonstrates defining a simple class and creating objects (instances) from it.
+  greet() {
+    console.log(`Hello, my name is ${this.name}.`);
+  }
+}
 
-```javascript
-// Define the Car class
+const user1 = new Person("Aman", 25);
+user1.greet();
+```
+
+---
+
+## 🧩 Important OOP Concepts and Terms
+
+| Concept       | Description                                              | Example                       |
+| ------------- | -------------------------------------------------------- | ----------------------------- |
+| Class         | Blueprint for creating objects                           | `class Car {}`                |
+| Object        | Instance of a class                                      | `const car1 = new Car()`      |
+| Constructor   | Method that initializes new objects                      | `constructor()`               |
+| Inheritance   | Child class inherits properties/methods of parent        | `class Dog extends Animal {}` |
+| Encapsulation | Protecting data using access modifiers or closures       | Private variables using `#`   |
+| Polymorphism  | Redefining a method for different objects                | Method overriding             |
+| Abstraction   | Hiding internal details and exposing only necessary info | Abstract classes or functions |
+
+---
+
+## 💻 Example Code (Basic and Advanced)
+
+### 🔹 Basic Example — Class and Object
+
+```js
 class Car {
-  constructor(make, model, year) {
-    this.make = make;
+  constructor(brand, model) {
+    this.brand = brand;
     this.model = model;
-    this.year = year;
-    this.isRunning = false;
   }
 
-  start() {
-    this.isRunning = true;
-    console.log(`${this.make} ${this.model} is starting!`);
-  }
-
-  stop() {
-    this.isRunning = false;
-    console.log(`${this.make} ${this.model} is stopping.`);
-  }
-
-  getInfo() {
-    return `A ${this.year} ${this.make} ${this.model}. Running: ${this.isRunning}`;
+  displayInfo() {
+    console.log(`Car: ${this.brand} ${this.model}`);
   }
 }
 
-// Create new Car objects (instances)
-const myCar = new Car('Toyota', 'Camry', 2022);
-const yourCar = new Car('Honda', 'Civic', 2020);
-
-// Use the methods
-myCar.start();
-// Output: Toyota Camry is starting!
-
-console.log(myCar.getInfo());
-// Output: A 2022 Toyota Camry. Running: true
-
-yourCar.stop();
-// Output: Honda Civic is stopping.
+const car1 = new Car("Tesla", "Model S");
+car1.displayInfo();
 ```
 
-### Advanced Usage: Inheritance and Static Methods
+### 🔹 Advanced Example — Inheritance and Method Overriding
 
-This example illustrates how to use **inheritance** to create a specialized class and a **static method** for class-level functionality.
-
-```javascript
-// Parent Class
-class Vehicle {
-  constructor(wheels) {
-    this.wheels = wheels;
+```js
+class Animal {
+  constructor(name) {
+    this.name = name;
   }
 
-  // Common method
-  printWheels() {
-    console.log(`This vehicle has ${this.wheels} wheels.`);
-  }
-  
-  // Static method - called on the class itself, not on an instance
-  static getVehicleType() {
-      return 'Generic Transportation Device';
+  speak() {
+    console.log(`${this.name} makes a noise.`);
   }
 }
 
-// Child Class - inherits from Vehicle
-class ElectricCar extends Vehicle {
-  constructor(make, batteryCapacity) {
-    // Call the parent's constructor with the 'wheels' parameter
-    super(4); 
-    this.make = make;
-    this.batteryCapacity = batteryCapacity; // New property
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);
+    this.breed = breed;
   }
 
-  // New method (Polymorphism: could override a parent method if it had the same name)
-  charge(percentage) {
-    console.log(`${this.make} is charging up to ${percentage}% capacity.`);
+  // Method overriding
+  speak() {
+    console.log(`${this.name} barks!`);
   }
 }
 
-// Inheritance in action
-const tesla = new ElectricCar('Tesla', '100 kWh');
-tesla.printWheels(); 
-// Output: This vehicle has 4 wheels. (Inherited from Vehicle)
-
-tesla.charge(80);
-// Output: Tesla is charging up to 80% capacity. (New method)
-
-// Static method usage
-console.log(Vehicle.getVehicleType());
-// Output: Generic Transportation Device
-// console.log(tesla.getVehicleType()); // This would throw an error!
+const dog1 = new Dog("Buddy", "Golden Retriever");
+dog1.speak(); // Output: Buddy barks!
 ```
 
------
+### 🔹 Encapsulation using Private Fields
 
-## ⚖️ Comparison Table: Classes vs. Prototypes
+```js
+class BankAccount {
+  #balance = 0; // private property
 
-While the `class` syntax is the modern way to do OOP in JavaScript, it's crucial to understand that JavaScript is fundamentally a **prototype-based language**. Classes are just a cleaner way to write prototype-based code.
+  deposit(amount) {
+    this.#balance += amount;
+  }
 
-| Feature | ES6 `class` Syntax | Pre-ES6 Constructor/Prototype |
-| :--- | :--- | :--- |
-| **Structure** | Uses the `class` keyword, `constructor()`, and defined methods. | Uses a regular function for the constructor and assigns methods to its `.prototype`. |
-| **Readability** | High; looks familiar to Java/C++ programmers (less boilerplate). | Lower; more manual setup of prototype chain required. |
-| **Inheritance** | Achieved with the `extends` keyword and `super()` function. | Achieved manually by setting the prototype chain (e.g., `Child.prototype = Object.create(Parent.prototype)`). |
-| **Primary Use** | Modern, recommended way to define blueprints for objects. | Less common now, but essential to understanding JavaScript's underlying mechanism. |
+  getBalance() {
+    return this.#balance;
+  }
+}
 
------
+const account = new BankAccount();
+account.deposit(500);
+console.log(account.getBalance()); // 500
+```
+
+---
+
+## 🧮 Table: Common Object Methods
+
+| Method                          | Description                             | Example                           |
+| ------------------------------- | --------------------------------------- | --------------------------------- |
+| `Object.keys(obj)`              | Returns array of keys                   | `Object.keys(user)`               |
+| `Object.values(obj)`            | Returns array of values                 | `Object.values(user)`             |
+| `Object.entries(obj)`           | Returns array of [key, value] pairs     | `Object.entries(user)`            |
+| `Object.assign(target, source)` | Copies properties to target object      | `Object.assign({}, user)`         |
+| `Object.create(proto)`          | Creates new object with given prototype | `Object.create(Person.prototype)` |
+
+---
+
+## ⚖️ Comparison Table: OOP vs Functional Programming
+
+| Feature          | OOP (Object-Oriented)                    | Functional Programming                  |
+| ---------------- | ---------------------------------------- | --------------------------------------- |
+| Core Unit        | Object                                   | Function                                |
+| State Management | Uses mutable state (via objects)         | Prefers immutability                    |
+| Reusability      | Achieved through inheritance and classes | Achieved through higher-order functions |
+| Focus            | Data + Behavior (together)               | Data transformation                     |
+| Example          | `class Car { drive() {} }`               | `const drive = (car) => ...`            |
+
+---
 
 ## 🧾 Summary
 
-Object-Orientled Programming in JavaScript provides a powerful structure for developing complex applications. By using the **`class`** keyword, developers can leverage **encapsulation**, **inheritance**, and **polymorphism** to model real-world concepts effectively. This leads to code that is more **modular**, **maintainable**, and easier to scale. While the syntax is class-based, it ultimately relies on JavaScript's underlying **prototypal inheritance** system, which defines how objects share properties and methods. Mastering OOP principles in JavaScript is essential for modern web development.
+* **OOP in JavaScript** is a structured way to organize code into objects and classes.
+* It makes large applications **more modular, maintainable, and scalable**.
+* Core principles: **Encapsulation**, **Inheritance**, **Polymorphism**, and **Abstraction**.
+* Modern JS supports **class-based OOP** (ES6) and **prototype-based inheritance** under the hood.
+* For real-world applications (like UI components, models, and services), OOP provides a powerful and intuitive foundation.
+
+> 🧠 Tip: Use OOP when your project has many related entities that share common behavior — it keeps your code organized, reusable, and easier to understand.
 
 ```
 ```
