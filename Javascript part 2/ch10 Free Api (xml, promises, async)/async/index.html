@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Comment Feed</title>
+    <!-- Google Fonts: Inter for clean, modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Variables (Consistent Theme) --- */
+        :root {
+            --color-bg-primary: #111111;        /* Deepest background */
+            --color-bg-card: #1c1c1c;           /* Comment card background */
+            --color-text-primary: #ffffff;      /* Main text color (comment body) */
+            --color-text-secondary: #aaaaaa;    /* Subdued text color */
+            --color-accent: #48bb78;            /* Subtle green accent (name/email) */
+            --spacing-large: 2.5rem;
+            --spacing-medium: 1.5rem;
+        }
+
+        /* --- Global & Typography --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            transition: background-color 0.3s;
+        }
+
+        /* --- Main Layout Container (Narrower for readability) --- */
+        .container {
+            max-width: 900px; /* Comments are typically displayed in a narrower column */
+            margin: 0 auto;
+            padding: var(--spacing-large) 1rem;
+        }
+
+        /* --- Header/Title Area --- */
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-large);
+            padding-bottom: var(--spacing-medium);
+            border-bottom: 1px solid #333; /* Subtle separator */
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            color: var(--color-text-primary);
+        }
+
+        .header p {
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        /* --- Comment Feed Container --- */
+        .comment-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem; /* Spacing between comments */
+        }
+
+        /* --- Individual Comment Card Styling --- */
+        .comment-card {
+            background-color: var(--color-bg-card);
+            padding: var(--spacing-medium);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 3px solid transparent; /* Accent line on the left */
+        }
+        
+        /* Interactive Hover Effect */
+        .comment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            border-left-color: var(--color-accent); /* Highlight on hover */
+        }
+
+        /* Comment Metadata (Name and Email) */
+        .comment-meta {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .comment-meta strong {
+            display: block;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--color-accent); /* Use accent color for the author's name */
+        }
+
+        .comment-meta .email {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        /* Comment Body Content */
+        .comment-body {
+            font-size: 1rem;
+            color: var(--color-text-primary);
+            margin-bottom: 0.5rem;
+            white-space: pre-wrap; /* Respects line breaks if you include them */
+        }
+
+        /* Post ID / Context Label */
+        .post-context {
+            font-size: 0.8rem;
+            color: #666; /* Very dark/subtle */
+            text-align: right;
+            margin-top: 1rem;
+        }
+
+        /* --- Placeholder Styling --- */
+        #comment-feed-container:empty:before {
+            content: "Comment Feed Ready: Awaiting API Data Execution.";
+            color: var(--color-text-secondary);
+            display: block;
+            text-align: center;
+            padding: 4rem 0;
+            font-size: 1.2rem;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 600px) {
+            .container {
+                padding: var(--spacing-medium) 0.5rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <h1>Post Comments Feed</h1>
+            <p>Minimalist display of fetched API comment data.</p>
+        </div>
+
+        <!-- Your JavaScript will inject the comment cards into this container -->
+        <main class="comment-feed" id="comment-feed-container">
+            <!-- Example Comment Card Structure for reference -->
+             <div class="comment-card">
+                <div class="comment-meta">
+                    <strong>id labore ex et quidam</strong>
+                    <span class="email">Eliseo@gardner.biz</span>
+                </div>
+                <div class="comment-body">
+                    laudantium enim quasi est et est. voluptatem aut sint minima.
+                    voluptas iusto est et uti.
+                </div>
+                <div class="post-context">
+                    Comment ID: 1 | Post ID: 1
+                </div>
+            </div> 
+            <!-- The actual cards will be generated by your JavaScript -->
+        </main>
+
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
