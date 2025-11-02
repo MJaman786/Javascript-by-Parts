@@ -24,3 +24,15 @@ let myCustom3 = myDate.toLocaleString('en-US', {
 })
 console.log(myCustom3.toString()); // 5:45:04 AM GMT+5:30
 
+// Custom Current Date
+let myDate = new Date().toLocaleString('en-US',{
+    hour24: true,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    weekday: 'short',
+    month: 'short',
+    year: 'numeric'
+});
+
+console.log(myDate) // Nov 2025 Sun, 12:23:37 PM
